@@ -1,5 +1,4 @@
 import pygame
-from ..models.board import Board
 
 BG = (250, 248, 239)
 BOARD_BG = (187, 173, 160)

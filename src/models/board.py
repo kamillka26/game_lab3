@@ -1,5 +1,5 @@
 import random
-from typing import List, Tuple
+from typing import List
 
 SIZE = 4
 
@@ -50,22 +50,36 @@ class Board:
     def move(self, direction):
         """Ход в направлении left/right/up/down."""
         before = [row[:] for row in self.cells]
-        turns = {"left": 0, "up": 1, "right": 2, "down": 3}
+
+        # Поворачиваем так, чтобы нужное направление стало "влево".
+        # - left: ничего не делаем (0 поворотов)
+        # - up: 3 поворота по часовой (это равносильно 1 повороту против
+        # часовой)
+        # - right: 2 поворота по часовой (180 градусов)
+        # - down: 1 поворот по часовой
+        turns = {"left": 0, "up": 3, "right": 2, "down": 1}
+
         if direction not in turns:
             raise ValueError(f"bad direction: {direction}")
 
         n = turns[direction]
+
+        # 1. Поворачиваем
         for _ in range(n):
             self.cells = self._rotate(self.cells)
 
+        # 2. Сдвигаем влево
         gained = 0
         for r in range(SIZE):
             self.cells[r], g = self._slide_left(self.cells[r])
             gained += g
 
-        for _ in range((4 - n) % 4):        # обратный поворот
+        # 3. Возвращаем обратно (делаем 4-n поворотов, чтобы в сумме было 4,
+        # т.е. полный круг)
+        for _ in range((4 - n) % 4):
             self.cells = self._rotate(self.cells)
 
+        # 4. Если поле изменилось, начисляем очки и добавляем плитку
         if self.cells != before:
             self.score += gained
             self.add_random_tile()

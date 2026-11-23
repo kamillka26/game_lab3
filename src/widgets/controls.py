@@ -1,5 +1,4 @@
 import pygame
-from ..models.board import Board
 
 KEYS = {
     pygame.K_LEFT: "left", pygame.K_a: "left",
