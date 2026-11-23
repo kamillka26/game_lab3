@@ -50,3 +50,22 @@ python main.py
 ### 5. Управление
 - `←` `→` `↑` `↓` или `WASD` — сдвиг
 - `R` — новая игра
+
+### Структура проекта
+game_lab3/
+├── .gitignore
+├── README.md
+├── requirements.txt
+├── main.py
+├── src/
+   ├── __init__.py
+   ├── app.py
+   ├── models/
+   │   ├── __init__.py
+   │   └── board.py 
+   ├── renderers/
+   │   ├── __init__.py
+   │   └── renderer.py
+   └── widgets/
+       ├── __init__.py
+       └── controls.py
